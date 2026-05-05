@@ -1,51 +1,45 @@
 CREATE TABLE parcelle (
-  id INT NOT NULL AUTO_INCREMENT,
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
   nom VARCHAR(255),
   localisation VARCHAR(255),
-  surface_ha DOUBLE,
-  PRIMARY KEY (id)
+  surface_ha DOUBLE
 );
 
 CREATE TABLE observations (
-  id INT NOT NULL AUTO_INCREMENT,
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
   date DATE,
   etat VARCHAR(255),
   commentaire VARCHAR(255),
   parcelle_id INT,
-  PRIMARY KEY (id),
   CONSTRAINT fk_observations_parcelle FOREIGN KEY (parcelle_id) REFERENCES parcelle(id) ON DELETE CASCADE
 );
 
 CREATE TABLE meteo (
-  id INT NOT NULL AUTO_INCREMENT,
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
   date DATE,
   temperature SMALLINT,
   humidite SMALLINT,
-  pluie_mm TINYINT,
-  PRIMARY KEY (id)
+  pluie_mm TINYINT
 );
 
 CREATE TABLE culture (
-  id INT NOT NULL AUTO_INCREMENT,
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
   type VARCHAR(255),
   date_semis DATE,
   parcelle_id INT,
-  PRIMARY KEY (id),
   CONSTRAINT fk_culture_parcelle FOREIGN KEY (parcelle_id) REFERENCES parcelle(id) ON DELETE CASCADE
 );
 
 CREATE TABLE alertes (
-  id INT NOT NULL AUTO_INCREMENT,
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
   date DATE,
   type VARCHAR(255),
   niveau VARCHAR(255),
   parcelle_id INT,
-  PRIMARY KEY (id),
   CONSTRAINT fk_alertes_parcelle FOREIGN KEY (parcelle_id) REFERENCES parcelle(id) ON DELETE CASCADE
 );
 
-
-INSERT INTO parcelle (`id`, `nom`, `localisation`, `surface_ha`) VALUES
+INSERT INTO parcelle (id, nom, localisation, surface_ha) VALUES
     ('1', 'Parcelle 1', 'Zone A', '2.45'),
     ('2', 'Parcelle 2', 'Zone B', '4.49'),
     ('3', 'Parcelle 3', 'Zone C', '2.15'),
@@ -57,7 +51,7 @@ INSERT INTO parcelle (`id`, `nom`, `localisation`, `surface_ha`) VALUES
     ('9', 'Parcelle 9', 'Zone D', '4.07'),
     ('10', 'Parcelle 10', 'Zone E', '2.37');
 
-INSERT INTO observation (`date`, `etat`, `parcelle_id`, `commentaire`) VALUES
+INSERT INTO observations (date, etat, parcelle_id, commentaire) VALUES
     ('2026-03-02', 'OK', '2', 'Sol sec'),
     ('2026-03-15', 'Risque maladie', '3', 'Sol sec'),
     ('2026-04-17', 'OK', '8', 'Sol sec'),
@@ -159,7 +153,7 @@ INSERT INTO observation (`date`, `etat`, `parcelle_id`, `commentaire`) VALUES
     ('2026-03-15', 'Risque maladie', '7', 'Rien à signaler'),
     ('2026-03-06', 'Maladie détectée', '3', 'Rien à signaler');
 
-INSERT INTO meteo (`date`, `temperature`, `humidite`, `pluie_mm`) VALUES
+INSERT INTO meteo (date, temperature, humidite, pluie_mm) VALUES
     ('2026-03-01', '17', '47', '0'),
     ('2026-03-02', '14', '74', '5'),
     ('2026-03-03', '29', '39', '30'),
@@ -221,7 +215,7 @@ INSERT INTO meteo (`date`, `temperature`, `humidite`, `pluie_mm`) VALUES
     ('2026-04-28', '27', '89', '0'),
     ('2026-04-29', '23', '56', '20');
 
-INSERT INTO culture (`id`, `type`, `date_semis`, `parcelle_id`) VALUES
+INSERT INTO culture (id, type, date_semis, parcelle_id) VALUES
     ('1', 'Orge', '2026-03-15', '1'),
     ('2', 'Tournesol', '2026-03-20', '2'),
     ('3', 'Blé', '2026-03-19', '3'),
@@ -233,7 +227,7 @@ INSERT INTO culture (`id`, `type`, `date_semis`, `parcelle_id`) VALUES
     ('9', 'Colza', '2026-03-12', '9'),
     ('10', 'Colza', '2026-03-17', '10');
 
-INSERT INTO alertes (`date`, `type`, `parcelle_id`, `niveau`) VALUES
+INSERT INTO alertes (date, type, parcelle_id, niveau) VALUES
     ('2026-04-11', 'Stress hydrique', '3', '2'),
     ('2026-03-04', 'Stress hydrique', '8', '1'),
     ('2026-03-29', 'Stress hydrique', '4', '1'),
