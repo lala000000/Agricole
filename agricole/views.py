@@ -63,10 +63,12 @@ def observations(request):
   }
   return HttpResponse(template.render(context, request))
 
-def parcel(request):
+def parcel(request, id):
+  parcelle = Parcelle.objects.prefetch_related('cultures', 'observations', 'alertes').get(id=id)
   template = loader.get_template('parcel.html')
   context = {
-    'nbralerte' : get_alertes_count()
+    'nbralerte': get_alertes_count(),
+    'parcelle': parcelle,
   }
   return HttpResponse(template.render(context, request))
 

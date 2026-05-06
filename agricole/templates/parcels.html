@@ -43,10 +43,10 @@
                         {% endwith %}
 
                         <div class="actions">
-                            <a href="{% url 'parcel' %}" class="btn-link">
-                            <button type="button">Voir</button>
+                            <a href="{% url 'parcel' parcelle.id %}">
+                                <button type="button">Voir</button>
                             </a>
-                        <button>Modifier</button>
+                            <button>Modifier</button>
                             <button>Supprimer</button>
                         </div>
                     </div>
