@@ -1,4 +1,4 @@
-{% load static %}
+{% load static l10n %}
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -27,15 +27,16 @@
                 <h1>Modifier la parcelle</h1>
             </header>
             <section class="content-section">
-                <form method="post" action="#">
+                <form method="post" action="{% url 'edit_parcelle' parcelle.id %}">
+                    {% csrf_token %}
                     <label for="nom">Nom de la parcelle</label>
-                    <input id="nom" name="nom" type="text" value="{{ parcelle.nom }}">
+                    <input id="nom" name="nom" type="text" value="{{ parcelle.nom }}" required>
 
                     <label for="localisation">Localisation</label>
-                    <input id="localisation" name="localisation" type="text" value="{{ parcelle.localisation }}">
+                    <input id="localisation" name="localisation" type="text" value="{{ parcelle.localisation }}" required>
 
                     <label for="surface_ha">Surface (ha)</label>
-                    <input id="surface_ha" name="surface_ha" type="number" step="0.01" value="{{ parcelle.surface_ha }}">
+                    <input id="surface_ha" name="surface_ha" type="number" step="0.01" value="{{ parcelle.surface_ha|unlocalize }}" required>
 
                     <button type="submit">Enregistrer</button>
                 </form>

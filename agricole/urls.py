@@ -10,6 +10,7 @@ urlpatterns = [
     path('observations/add/', views.add_observation, name='add_observation'),
     path('parcel/new/', views.create_parcelle, name='create_parcelle'),
     path('parcel/<int:id>/edit/', views.edit_parcelle, name='edit_parcelle'),
+    path('parcel/<int:id>/delete/', views.delete_parcelle, name='delete_parcelle'),
     path('parcel/<int:id>/', views.parcel, name='parcel'),
     path('parcels/', views.parcels, name='parcels'),
     path('profile/', views.profile, name='profile'),

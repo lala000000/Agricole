@@ -50,7 +50,10 @@
                             <a href="{% url 'edit_parcelle' parcelle.id %}">
                                 <button type="button">Modifier</button>
                             </a>
-                            <button>Supprimer</button>
+                            <form method="post" action="{% url 'delete_parcelle' parcelle.id %}" style="display:inline;">
+                                {% csrf_token %}
+                                <button type="submit" onclick="return confirm('Supprimer cette parcelle ?')">Supprimer</button>
+                            </form>
                         </div>
                     </div>
                 {% empty %}
