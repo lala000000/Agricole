@@ -14,12 +14,12 @@
         <aside class="sidebar">
             <h2>Menu</h2>
             <ul>
-                <li><a href="dashboard.html">Tableau de bord</a></li>
-                <li><a href="parcels.html">Parcelles</a></li>
-                <li><a href="observations.html">Observations</a></li>
-                <li><a href="alerts.html">Alertes</a></li>
-                <li><a href="profile.html">Profil</a></li>
-                <li><a href="settings.html">Paramètres</a></li>
+                <li><a href="{% url 'home' %}">Tableau de bord</a></li>
+                <li><a href="{% url 'parcels' %}">Parcelles</a></li>
+                <li><a href="{% url 'observations' %}">Observations</a></li>
+                <li><a href="{% url 'alertes' %}">Alertes</a></li>
+                <li><a href="{% url 'profile' %}">Profil</a></li>
+                <li><a href="{% url 'settings' %}">Paramètres</a></li>
             </ul>
         </aside>
         <main class="main-content">
