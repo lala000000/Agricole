@@ -1,0 +1,46 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nouvelle parcelle</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+    <div class="container">
+        <aside class="sidebar">
+            <h2>Menu</h2>
+            <ul>
+                <li><a href="{% url 'home' %}">Tableau de bord</a></li>
+                <li><a href="{% url 'cultures' %}">Cultures</a></li>
+                <li><a href="{% url 'parcels' %}">Parcelles</a></li>
+                <li><a href="{% url 'observations' %}">Observations</a></li>
+                <li><a href="{% url 'alertes' %}">Alertes ({{ nbralerte }})</a></li>
+                <li><a href="{% url 'profile' %}">Profil</a></li>
+                <li><a href="{% url 'settings' %}">Paramètres</a></li>
+            </ul>
+        </aside>
+
+        <main class="main-content">
+            <header class="header">
+                <h1>Créer une parcelle</h1>
+            </header>
+            <section class="content-section">
+                <form method="post" action="#">
+                    <label for="nom">Nom de la parcelle</label>
+                    <input id="nom" name="nom" type="text" placeholder="Parcelle A">
+
+                    <label for="localisation">Localisation</label>
+                    <input id="localisation" name="localisation" type="text" placeholder="Champ Nord">
+
+                    <label for="surface_ha">Surface (ha)</label>
+                    <input id="surface_ha" name="surface_ha" type="number" step="0.01" placeholder="12.50">
+
+                    <button type="submit">Créer</button>
+                </form>
+            </section>
+        </main>
+    </div>
+</body>
+</html>

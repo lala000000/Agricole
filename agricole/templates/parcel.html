@@ -25,7 +25,7 @@
         <main class="main-content">
             <header class="header">
                 <h1>{{ parcelle.nom }}</h1>
-                <button class="edit-btn">Modifier</button>
+                <a href="{% url 'edit_parcelle' parcelle.id %}"><button class="edit-btn">Modifier</button></a>
             </header>
 
             <section class="parcel-info">

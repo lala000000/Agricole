@@ -86,6 +86,22 @@ def parcels(request):
   }
   return HttpResponse(template.render(context, request))
 
+def create_parcelle(request):
+  template = loader.get_template('create_parcelle.html')
+  context = {
+    'nbralerte': get_alertes_count(),
+  }
+  return HttpResponse(template.render(context, request))
+
+def edit_parcelle(request, id):
+  parcelle = Parcelle.objects.get(id=id)
+  template = loader.get_template('edit_parcelle.html')
+  context = {
+    'nbralerte': get_alertes_count(),
+    'parcelle': parcelle,
+  }
+  return HttpResponse(template.render(context, request))
+
 def profile(request):
   template = loader.get_template('profile.html')
   context = {
