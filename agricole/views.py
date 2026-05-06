@@ -1,9 +1,15 @@
 from django.http import HttpResponse
 from django.template import loader
+from .models import Culture
 
 def dashboard(request):
   template = loader.get_template('dashboard.html')
   return HttpResponse(template.render())
+
+def cultures(request):
+  template = loader.get_template('cultures.html')
+  cultures = Culture.objects.select_related('parcelle').all()
+  return HttpResponse(template.render({'cultures': cultures}))
 
 def alertes(request):
   template = loader.get_template('alertes.html')
