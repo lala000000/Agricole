@@ -1,7 +1,7 @@
 import datetime
 from django.http import HttpResponse
 from django.template import loader
-from django.shortcuts import redirect
+from django.shortcuts import redirect, get_object_or_404
 from .models import Meteo, Observation, Parcelle, Alerte, Culture
 
 def get_alertes_count():
@@ -103,7 +103,10 @@ def add_observation(request):
   return redirect('observations')
 
 def parcel(request, id):
-  parcelle = Parcelle.objects.prefetch_related('cultures', 'observations', 'alertes').get(id=id)
+  parcelle = get_object_or_404(
+    Parcelle.objects.prefetch_related('cultures', 'observations', 'alertes'),
+    id=id
+  )
   template = loader.get_template('parcel.html')
   context = {
     'nbralerte': get_alertes_count(),
@@ -121,6 +124,18 @@ def parcels(request):
   return HttpResponse(template.render(context, request))
 
 def create_parcelle(request):
+  if request.method == 'POST':
+    nom = request.POST.get('nom')
+    localisation = request.POST.get('localisation')
+    surface_ha = request.POST.get('surface_ha')
+
+    Parcelle.objects.create(
+      nom=nom,
+      localisation=localisation,
+      surface_ha=float(surface_ha) if surface_ha else 0,
+    )
+    return redirect('parcels')
+
   template = loader.get_template('create_parcelle.html')
   context = {
     'nbralerte': get_alertes_count(),
@@ -128,13 +143,31 @@ def create_parcelle(request):
   return HttpResponse(template.render(context, request))
 
 def edit_parcelle(request, id):
-  parcelle = Parcelle.objects.get(id=id)
+  parcelle = get_object_or_404(Parcelle, id=id)
+
+  if request.method == 'POST':
+    parcelle.nom = request.POST.get('nom')
+    parcelle.localisation = request.POST.get('localisation')
+    surface_ha = request.POST.get('surface_ha')
+    parcelle.surface_ha = float(surface_ha) if surface_ha else 0
+    parcelle.save()
+    return redirect('parcels')
+
   template = loader.get_template('edit_parcelle.html')
   context = {
     'nbralerte': get_alertes_count(),
     'parcelle': parcelle,
   }
   return HttpResponse(template.render(context, request))
+
+def delete_parcelle(request, id):
+  parcelle = get_object_or_404(Parcelle, id=id)
+
+  if request.method == 'POST':
+    parcelle.delete()
+    return redirect('parcels')
+
+  return redirect('parcels')
 
 def create_culture(request):
   template = loader.get_template('create_culture.html')
