@@ -71,9 +71,11 @@ def parcel(request):
   return HttpResponse(template.render(context, request))
 
 def parcels(request):
+  parcelles = Parcelle.objects.prefetch_related('cultures', 'observations').all()
   template = loader.get_template('parcels.html')
   context = {
-    'nbralerte' : get_alertes_count()
+    'nbralerte': get_alertes_count(),
+    'parcelles': parcelles,
   }
   return HttpResponse(template.render(context, request))
 
