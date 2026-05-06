@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interface Utilisateur de Base</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>Bienvenue dans l'Interface Utilisateur</h1>
+        <nav>
+            <ul>
+                <li><a href="{% url 'home' %}">Accueil</a></li>
+                <li><a href="{% url 'home' %}">Dashboard</a></li>
+                <li><a href="{% url 'profile' %}">Profil</a></li>
+                <li><a href="{% url 'settings' %}">Paramètres</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section>
+            <h2>Page d'Accueil</h2>
+            <p>Ceci est la page d'accueil de votre interface utilisateur.</p>
+            <button id="bouton-action">Cliquez ici</button>
+        </section>
+    </main>
+    <footer>
+        <p>&copy; 2026 Votre Projet</p>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,55 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parcelle A</title>
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+    <div class="container">
+        <aside class="sidebar">
+            <h2>Menu</h2>
+            <ul>
+                <li><a href="{% url 'home' %}">Tableau de bord</a></li>
+                <li><a href="{% url 'parcels' %}">Parcelles</a></li>
+                <li><a href="{% url 'observations' %}">Observations</a></li>
+                <li><a href="{% url 'alertes' %}">Alertes ({{nbralerte}})</a></li>
+                <li><a href="{% url 'profile' %}">Profil</a></li>
+                <li><a href="{% url 'settings' %}">Paramètres</a></li>
+            </ul>
+        </aside>
+        <main class="main-content">
+            <header class="header">
+                <h1>Parcelle A</h1>
+                <button class="edit-btn">Modifier</button>
+            </header>
+            <section class="parcel-info">
+                <h2>Informations</h2>
+                <ul>
+                    <li>Culture : Blé</li>
+                    <li>Surface : 2,4 ha</li>
+                    <li>Zone : Nord</li>
+                </ul>
+            </section>
+            <section class="indicators">
+                <h2>Indicateurs</h2>
+                <ul>
+                    <li>Température : 18°C</li>
+                    <li>Humidité : 78%</li>
+                    <li>Risque : Moyen</li>
+                </ul>
+            </section>
+            <section class="history">
+                <h2>Historique</h2>
+                <ul>
+                    <li>04/05 : "Feuilles jaunies"</li>
+                    <li>03/05 : "Sol humide"</li>
+                </ul>
+            </section>
+        </main>
+    </div>
+</body>
+</html>

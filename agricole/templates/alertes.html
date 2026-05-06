@@ -1,0 +1,45 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alertes</title>
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+    <div class="container">
+        <aside class="sidebar">
+            <h2>Menu</h2>
+            <ul>
+                <li><a href="{% url 'home' %}">Tableau de bord</a></li>
+                <li><a href="{% url 'parcels' %}">Parcelles</a></li>
+                <li><a href="{% url 'observations' %}">Observations</a></li>
+                <li><a href="{% url 'alertes' %}">Alertes ({{nbralerte}})</a></li>
+                <li><a href="{% url 'profile' %}">Profil</a></li>
+                <li><a href="{% url 'settings' %}">Paramètres</a></li>
+            </ul>
+        </aside>
+        <main class="main-content">
+            <header class="header">
+                <h1>Alertes</h1>
+            </header>
+            <section class="alerts-list">
+                <h2>Liste des alertes</h2>
+                <ul>
+                    <li>Parcelle A | Risque maladie | Critique</li>
+                    <li>Parcelle C | Vent fort | Moyen</li>
+                </ul>
+            </section>
+            <section class="rules">
+                <h2>Règles métier</h2>
+                <ul>
+                    <li>Humidité > 80% + Température > 18°C</li>
+                    <li>Vent > 40 km/h</li>
+                </ul>
+            </section>
+        </main>
+    </div>
+</body>
+</html>

@@ -1,3 +1,92 @@
-from django.shortcuts import render
+import datetime
+from django.http import HttpResponse
+from django.template import loader
+from .models import Meteo, Observation, Parcelle, Alerte
 
-# Create your views here.
+def get_alertes_count():
+  """Retourne le nombre d'alertes non lues"""
+  return Alerte.objects.filter(est_lue=False).count()
+
+def dashboard(request):
+  allparcelles = Parcelle.objects.all()
+  allobservations = Observation.objects.all()
+  allalertes = Alerte.objects.filter(est_lue=False)
+  today = datetime.date.today()
+  compteurparcelle = 0
+  compteurobservation = 0
+  compteuralerte = 0
+  alerteniveaumoyenne = 0
+  
+  jourmeteo = Meteo.objects.filter(date=today).first()
+
+  for i in allparcelles:
+    compteurparcelle += 1
+
+  for i in allobservations:
+    if i.date > today - datetime.timedelta(days=14):
+      compteurobservation += 1
+  
+  for i in allalertes:
+    compteuralerte += 1
+    alerteniveaumoyenne += i.niveau
+  
+  if compteuralerte > 0:
+    alerteniveaumoyenne = round(alerteniveaumoyenne / compteuralerte)
+  niveau_label = dict(Alerte.NIVEAUX).get(alerteniveaumoyenne, 'Inconnu')
+  
+  observations_risque = Observation.objects.filter(
+    etat__in=['Stress hydrique', 'Maladie détectée', 'Risque maladie']
+  ).order_by('-date')[:3]
+  
+  template = loader.get_template('dashboard.html')
+  context = {
+    'meteo' : jourmeteo,
+    'nbrparcelle' : compteurparcelle,
+    'nbrobservation' : compteurobservation,
+    'nbralerte' : compteuralerte,
+    'niveaualerte' : niveau_label,
+    'observations_risque' : observations_risque
+  }
+  return HttpResponse(template.render(context, request))
+
+def alertes(request):
+  template = loader.get_template('alertes.html')
+  context = {
+    'nbralerte' : get_alertes_count()
+  }
+  return HttpResponse(template.render(context, request))
+
+def observations(request):
+  template = loader.get_template('observations.html')
+  context = {
+    'nbralerte' : get_alertes_count()
+  }
+  return HttpResponse(template.render(context, request))
+
+def parcel(request):
+  template = loader.get_template('parcel.html')
+  context = {
+    'nbralerte' : get_alertes_count()
+  }
+  return HttpResponse(template.render(context, request))
+
+def parcels(request):
+  template = loader.get_template('parcels.html')
+  context = {
+    'nbralerte' : get_alertes_count()
+  }
+  return HttpResponse(template.render(context, request))
+
+def profile(request):
+  template = loader.get_template('profile.html')
+  context = {
+    'nbralerte' : get_alertes_count()
+  }
+  return HttpResponse(template.render(context, request))
+
+def settings(request):
+  template = loader.get_template('settings.html')
+  context = {
+    'nbralerte' : get_alertes_count()
+  }
+  return HttpResponse(template.render(context, request))

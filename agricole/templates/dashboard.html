@@ -1,0 +1,66 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="fr">
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+    <div class="container">
+        <aside class="sidebar">
+            <h2>Menu</h2>
+            <ul>
+                <li><a href="{% url 'home' %}">Tableau de bord</a></li>
+                <li><a href="{% url 'parcels' %}">Parcelles</a></li>
+                <li><a href="{% url 'observations' %}">Observations</a></li>
+                <li><a href="{% url 'alertes' %}">Alertes ({{nbralerte}})</a></li>
+                <li><a href="{% url 'profile' %}">Profil</a></li>
+                <li><a href="{% url 'settings' %}">Paramètres</a></li>
+            </ul>
+        </aside>
+        <main class="main-content">
+            <header class="header">
+                <h1>Tableau de bord</h1>
+                <div class="weather">{{meteo}}</div>
+            </header>
+            <section class="tiles">
+                <div class="tile">
+                    
+                    <h3>Parcelles</h3>
+                    <p>Nombre: {{nbrparcelle}}</p>
+                </div>
+                <div class="tile">
+                    <h3>Observations</h3>
+                    <p>Récentes: {{nbrobservation}}</p>
+                </div>
+                <div class="tile">
+                    <h3>Nouvelles alertes</h3>
+                    <p>Actives: {{nbralerte}}</p>
+                </div>
+                <div class="tile">
+                    <h3>Risques</h3>
+                    <p>Niveau: {{niveaualerte}} </p>
+                </div>
+            </section>
+            <section class="chart">
+                <h2>Graphique météo / évolution humidité</h2>
+                <div class="chart-placeholder">[Graphique simulé]</div>
+            </section>
+            <section class="risks">
+                <h2>Situations à risque</h2>
+                <ul>
+                    {% for obs in observations_risque %}
+                    <li>{{ obs.etat }} - {{ obs.parcelle.nom }} ({{ obs.date }})</li>
+                    {% empty %}
+                    <li>Aucune observation à risque</li>
+                    {% endfor %}
+                </ul>
+            </section>
+        </main>
+    </div>
+</body>
+</html>

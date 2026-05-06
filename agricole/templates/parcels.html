@@ -1,0 +1,54 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parcelles</title>
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+    <div class="container">
+        <aside class="sidebar">
+            <h2>Menu</h2>
+            <ul>
+                <li><a href="{% url 'home' %}">Tableau de bord</a></li>
+                <li><a href="{% url 'parcels' %}">Parcelles</a></li>
+                <li><a href="{% url 'observations' %}">Observations</a></li>
+                <li><a href="{% url 'alertes' %}">Alertes ({{nbralerte}})</a></li>
+                <li><a href="{% url 'profile' %}">Profil</a></li>
+                <li><a href="{% url 'settings' %}">Paramètres</a></li>
+            </ul>
+        </aside>
+        <main class="main-content">
+            <header class="header">
+                <h1>Parcelles</h1>
+                <button class="add-btn">+ Ajouter</button>
+            </header>
+            <section class="parcels-list">
+                <div class="parcel-card">
+                    <h3>Parcelle A</h3>
+                    <p>Culture: Blé</p>
+                    <p>Dernière obs: Hier</p>
+                    <div class="actions">
+                        <button>Voir</button>
+                        <button>Modifier</button>
+                        <button>Supprimer</button>
+                    </div>
+                </div>
+                <div class="parcel-card">
+                    <h3>Parcelle B</h3>
+                    <p>Culture: Maïs</p>
+                    <p>Dernière obs: 2j</p>
+                    <div class="actions">
+                        <button>Voir</button>
+                        <button>Modifier</button>
+                        <button>Supprimer</button>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+</body>
+</html>
