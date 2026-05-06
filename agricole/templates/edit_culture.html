@@ -27,9 +27,10 @@
                 <h1>Modifier la culture</h1>
             </header>
             <section class="content-section">
-                <form method="post" action="#">
+                <form method="post" action="{% url 'edit_culture' culture.id %}">
+                    {% csrf_token %}
                     <label for="type">Type de culture</label>
-                    <select id="type" name="type">
+                    <select id="type" name="type" required>
                         <option value="Blé" {% if culture.type == 'Blé' %}selected{% endif %}>Blé</option>
                         <option value="Maïs" {% if culture.type == 'Maïs' %}selected{% endif %}>Maïs</option>
                         <option value="Orge" {% if culture.type == 'Orge' %}selected{% endif %}>Orge</option>
@@ -38,10 +39,10 @@
                     </select>
 
                     <label for="date_semis">Date de semis</label>
-                    <input id="date_semis" name="date_semis" type="date" value="{{ culture.date_semis }}">
+                    <input id="date_semis" name="date_semis" type="date" value="{{ culture.date_semis|date:'Y-m-d' }}" required>
 
                     <label for="parcelle">Parcelle</label>
-                    <select id="parcelle" name="parcelle">
+                    <select id="parcelle" name="parcelle" required>
                         {% for parcelle in parcelles %}
                         <option value="{{ parcelle.id }}" {% if parcelle.id == culture.parcelle.id %}selected{% endif %}>
                             {{ parcelle.nom }} - {{ parcelle.localisation }}

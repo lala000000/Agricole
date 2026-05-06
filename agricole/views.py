@@ -60,13 +60,61 @@ def cultures(request):
   return HttpResponse(template.render(context, request))
 
 def culture(request, id):
-  culture = Culture.objects.select_related('parcelle').get(id=id)
+  culture = get_object_or_404(Culture.objects.select_related('parcelle'), id=id)
   template = loader.get_template('culture.html')
   context = {
     'nbralerte': get_alertes_count(),
     'culture': culture,
   }
   return HttpResponse(template.render(context, request))
+
+def create_culture(request):
+  if request.method == 'POST':
+    type_culture = request.POST.get('type')
+    date_semis = request.POST.get('date_semis')
+    parcelle_id = request.POST.get('parcelle')
+    parcelle = get_object_or_404(Parcelle, id=parcelle_id)
+    Culture.objects.create(
+      type=type_culture,
+      date_semis=date_semis,
+      parcelle=parcelle,
+    )
+    return redirect('cultures')
+
+  template = loader.get_template('create_culture.html')
+  context = {
+    'nbralerte': get_alertes_count(),
+    'parcelles': Parcelle.objects.all(),
+  }
+  return HttpResponse(template.render(context, request))
+
+def edit_culture(request, id):
+  culture = get_object_or_404(Culture.objects.select_related('parcelle'), id=id)
+
+  if request.method == 'POST':
+    culture.type = request.POST.get('type')
+    culture.date_semis = request.POST.get('date_semis')
+    parcelle_id = request.POST.get('parcelle')
+    culture.parcelle = Parcelle.objects.get(id=parcelle_id)
+    culture.save()
+    return redirect('cultures')
+
+  template = loader.get_template('edit_culture.html')
+  context = {
+    'nbralerte': get_alertes_count(),
+    'culture': culture,
+    'parcelles': Parcelle.objects.all(),
+  }
+  return HttpResponse(template.render(context, request))
+
+def delete_culture(request, id):
+  culture = get_object_or_404(Culture, id=id)
+
+  if request.method == 'POST':
+    culture.delete()
+    return redirect('cultures')
+
+  return redirect('cultures')
 
 def alertes(request):
   template = loader.get_template('alertes.html')
@@ -168,24 +216,6 @@ def delete_parcelle(request, id):
     return redirect('parcels')
 
   return redirect('parcels')
-
-def create_culture(request):
-  template = loader.get_template('create_culture.html')
-  context = {
-    'nbralerte': get_alertes_count(),
-    'parcelles': Parcelle.objects.all(),
-  }
-  return HttpResponse(template.render(context, request))
-
-def edit_culture(request, id):
-  culture = Culture.objects.select_related('parcelle').get(id=id)
-  template = loader.get_template('edit_culture.html')
-  context = {
-    'nbralerte': get_alertes_count(),
-    'culture': culture,
-    'parcelles': Parcelle.objects.all(),
-  }
-  return HttpResponse(template.render(context, request))
 
 def profile(request):
   template = loader.get_template('profile.html')
