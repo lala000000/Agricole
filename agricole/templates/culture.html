@@ -1,0 +1,59 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ culture.type }} - {{ culture.parcelle.nom }}</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+    <div class="container">
+        <aside class="sidebar">
+            <h2>Menu</h2>
+            <ul>
+                <li><a href="{% url 'home' %}">Tableau de bord</a></li>
+                <li><a href="{% url 'cultures' %}">Cultures</a></li>
+                <li><a href="{% url 'parcels' %}">Parcelles</a></li>
+                <li><a href="{% url 'observations' %}">Observations</a></li>
+                <li><a href="{% url 'alertes' %}">Alertes ({{ nbralerte }})</a></li>
+                <li><a href="{% url 'profile' %}">Profil</a></li>
+                <li><a href="{% url 'settings' %}">Paramètres</a></li>
+            </ul>
+        </aside>
+
+        <main class="main-content">
+            <header class="header">
+                <h1>{{ culture.type }} - {{ culture.parcelle.nom }}</h1>
+                <a href="{% url 'edit_culture' culture.id %}"><button class="edit-btn">Modifier</button></a>
+            </header>
+
+            <section class="parcel-info">
+                <h2>Informations de la culture</h2>
+                <ul>
+                    <li>Type : {{ culture.type }}</li>
+                    <li>Date de semis : {{ culture.date_semis|date:"j F Y" }}</li>
+                    <li>Parcelle : {{ culture.parcelle.nom }}</li>
+                    <li>Localisation : {{ culture.parcelle.localisation }}</li>
+                    <li>Surface : {{ culture.parcelle.surface_ha }} ha</li>
+                </ul>
+            </section>
+
+            <section class="indicators">
+                <h2>Détails</h2>
+                <ul>
+                    <li>Dernière observation:
+                        {% with obs=culture.parcelle.observations.all|first %}
+                            {% if obs %}
+                                {{ obs.date|date:"j F Y" }} - {{ obs.etat }}{% if obs.commentaire %} : {{ obs.commentaire }}{% endif %}
+                            {% else %}
+                                Aucune observation
+                            {% endif %}
+                        {% endwith %}
+                    </li>
+                </ul>
+            </section>
+        </main>
+    </div>
+</body>
+</html>

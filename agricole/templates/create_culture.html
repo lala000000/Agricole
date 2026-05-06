@@ -1,0 +1,56 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Créer une culture</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+    <div class="container">
+        <aside class="sidebar">
+            <h2>Menu</h2>
+            <ul>
+                <li><a href="{% url 'home' %}">Tableau de bord</a></li>
+                <li><a href="{% url 'cultures' %}">Cultures</a></li>
+                <li><a href="{% url 'parcels' %}">Parcelles</a></li>
+                <li><a href="{% url 'observations' %}">Observations</a></li>
+                <li><a href="{% url 'alertes' %}">Alertes ({{ nbralerte }})</a></li>
+                <li><a href="{% url 'profile' %}">Profil</a></li>
+                <li><a href="{% url 'settings' %}">Paramètres</a></li>
+            </ul>
+        </aside>
+
+        <main class="main-content">
+            <header class="header">
+                <h1>Créer une culture</h1>
+            </header>
+            <section class="content-section">
+                <form method="post" action="#">
+                    <label for="type">Type de culture</label>
+                    <select id="type" name="type">
+                        <option value="Blé">Blé</option>
+                        <option value="Maïs">Maïs</option>
+                        <option value="Orge">Orge</option>
+                        <option value="Tournesol">Tournesol</option>
+                        <option value="Colza">Colza</option>
+                    </select>
+
+                    <label for="date_semis">Date de semis</label>
+                    <input id="date_semis" name="date_semis" type="date">
+
+                    <label for="parcelle">Parcelle</label>
+                    <select id="parcelle" name="parcelle">
+                        {% for parcelle in parcelles %}
+                        <option value="{{ parcelle.id }}">{{ parcelle.nom }} - {{ parcelle.localisation }}</option>
+                        {% endfor %}
+                    </select>
+
+                    <button type="submit">Créer</button>
+                </form>
+            </section>
+        </main>
+    </div>
+</body>
+</html>

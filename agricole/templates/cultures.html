@@ -25,7 +25,7 @@
         <main class="main-content">
             <header class="header">
                 <h1>Cultures</h1>
-                <button class="add-btn">+ Ajouter</button>
+                <a href="{% url 'create_culture' %}"><button class="add-btn">+ Ajouter</button></a>
             </header>
             <section class="parcels-list">
                 {% if cultures %}
@@ -47,8 +47,8 @@
                             <td>{{ culture.date_semis }}</td>
                             <td>{{ culture.parcelle.nom }}</td>
                             <td>
-                                <button>Voir</button>
-                                <button>Modifier</button>
+                                <a href="{% url 'culture' culture.id %}"><button type="button">Voir</button></a>
+                                <a href="{% url 'edit_culture' culture.id %}"><button type="button">Modifier</button></a>
                                 <button>Supprimer</button>
                             </td>
                         </tr>

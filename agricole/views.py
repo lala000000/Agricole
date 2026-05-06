@@ -53,7 +53,20 @@ def dashboard(request):
 def cultures(request):
   template = loader.get_template('cultures.html')
   cultures = Culture.objects.select_related('parcelle').all()
-  return HttpResponse(template.render({'cultures': cultures}))
+  context = {
+    'nbralerte': get_alertes_count(),
+    'cultures': cultures,
+  }
+  return HttpResponse(template.render(context, request))
+
+def culture(request, id):
+  culture = Culture.objects.select_related('parcelle').get(id=id)
+  template = loader.get_template('culture.html')
+  context = {
+    'nbralerte': get_alertes_count(),
+    'culture': culture,
+  }
+  return HttpResponse(template.render(context, request))
 
 def alertes(request):
   template = loader.get_template('alertes.html')
@@ -120,6 +133,24 @@ def edit_parcelle(request, id):
   context = {
     'nbralerte': get_alertes_count(),
     'parcelle': parcelle,
+  }
+  return HttpResponse(template.render(context, request))
+
+def create_culture(request):
+  template = loader.get_template('create_culture.html')
+  context = {
+    'nbralerte': get_alertes_count(),
+    'parcelles': Parcelle.objects.all(),
+  }
+  return HttpResponse(template.render(context, request))
+
+def edit_culture(request, id):
+  culture = Culture.objects.select_related('parcelle').get(id=id)
+  template = loader.get_template('edit_culture.html')
+  context = {
+    'nbralerte': get_alertes_count(),
+    'culture': culture,
+    'parcelles': Parcelle.objects.all(),
   }
   return HttpResponse(template.render(context, request))
 
