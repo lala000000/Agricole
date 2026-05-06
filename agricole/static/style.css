@@ -5,8 +5,8 @@
     --border: rgba(15, 23, 42, 0.1);
     --text: #111827;
     --text-muted: #475569;
-    --accent: #6366f1;
-    --accent-hover: #4f46e5;
+    --accent: #9ad837;
+    --accent-hover: #4b872a;
     --accent-soft: rgba(99, 102, 241, 0.14);
     --shadow: 0 18px 40px rgba(15, 23, 42, 0.08);
 }
@@ -123,7 +123,7 @@ button,
 button:hover,
 .sidebar button:hover {
     transform: translateY(-1px);
-    background: linear-gradient(135deg, #4f46e5, #4338ca);
+    background: linear-gradient(135deg, #7be546, #4ba729);
 }
 
 .tiles {
@@ -208,7 +208,7 @@ input:focus,
 select:focus,
 textarea:focus {
     outline: none;
-    border-color: #7c3aed;
+    border-color: #b7ed3a;
     box-shadow: 0 0 0 6px rgba(124, 58, 237, 0.1);
 }
 
