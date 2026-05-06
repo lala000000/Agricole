@@ -41,7 +41,7 @@ class Observation(models.Model):
     parcelle = models.ForeignKey(Parcelle, on_delete=models.CASCADE, related_name='observations')
 
     def __str__(self):
-        return f"{self.parcelle.nom} - {self.date}"
+        return f"{self.parcelle.nom} - {self.commentaire} - {self.date}"
 
     class Meta:
         ordering = ['-date']
@@ -53,20 +53,20 @@ class Meteo(models.Model):
     pluie_mm = models.IntegerField()
 
     def __str__(self):
-        return f"Météo {self.date}"
+        return f"Météo {self.temperature}°C / {self.humidite}% / {self.pluie_mm}mm de précipitation"
 
     class Meta:
         ordering = ['-date']
 
 class Alerte(models.Model):
     NIVEAUX = [
-        ('1', 'Faible'),
-        ('2', 'Moyen'),
-        ('3', 'Élevé'),
+        (1, 'Faible'),
+        (2, 'Moyen'),
+        (3, 'Élevé'),
     ]
     date = models.DateField()
     type = models.CharField(max_length=255)
-    niveau = models.CharField(max_length=1, choices=NIVEAUX)
+    niveau = models.IntegerField(choices=NIVEAUX)
     parcelle = models.ForeignKey(Parcelle, on_delete=models.CASCADE, related_name='alertes')
     est_lue = models.BooleanField(default=False)
 
