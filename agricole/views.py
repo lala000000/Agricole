@@ -1,6 +1,7 @@
 import datetime
 from django.http import HttpResponse
 from django.template import loader
+from django.shortcuts import redirect
 from .models import Meteo, Observation, Parcelle, Alerte, Culture
 
 def get_alertes_count():
@@ -62,11 +63,31 @@ def alertes(request):
   return HttpResponse(template.render(context, request))
 
 def observations(request):
+  allobservations = Observation.objects.all().order_by('-date')[:10]
   template = loader.get_template('observations.html')
   context = {
-    'nbralerte' : get_alertes_count()
+    'nbralerte': get_alertes_count(),
+    'observations': allobservations,
+    'parcelles': Parcelle.objects.all(),
   }
   return HttpResponse(template.render(context, request))
+
+def add_observation(request):
+  if request.method == 'POST':
+    parcelle_id = request.POST.get('parcel')
+    etat = request.POST.get('etat')
+    commentaire = request.POST.get('comment')
+    
+    parcelle = Parcelle.objects.get(id=parcelle_id)
+    Observation.objects.create(
+      parcelle=parcelle,
+      etat=etat,
+      commentaire=commentaire,
+      date=datetime.date.today()
+    )
+    return redirect('observations')
+  
+  return redirect('observations')
 
 def parcel(request, id):
   parcelle = Parcelle.objects.prefetch_related('cultures', 'observations', 'alertes').get(id=id)
