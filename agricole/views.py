@@ -1,7 +1,7 @@
 import datetime
 from django.http import HttpResponse
 from django.template import loader
-from .models import Meteo, Observation, Parcelle, Alerte
+from .models import Meteo, Observation, Parcelle, Alerte, Culture
 
 def get_alertes_count():
   """Retourne le nombre d'alertes non lues"""
@@ -48,6 +48,11 @@ def dashboard(request):
     'observations_risque' : observations_risque
   }
   return HttpResponse(template.render(context, request))
+
+def cultures(request):
+  template = loader.get_template('cultures.html')
+  cultures = Culture.objects.select_related('parcelle').all()
+  return HttpResponse(template.render({'cultures': cultures}))
 
 def alertes(request):
   template = loader.get_template('alertes.html')
