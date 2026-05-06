@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Créer une culture</title>
+    <title>Nouvelle culture</title>
     <link rel="stylesheet" href="{% static 'style.css' %}">
 </head>
 <body>
@@ -24,12 +24,14 @@
 
         <main class="main-content">
             <header class="header">
-                <h1>Créer une culture</h1>
+                <h1>Nouvelle culture</h1>
             </header>
             <section class="content-section">
-                <form method="post" action="#">
+                <form method="post" action="{% url 'create_culture' %}">
+                    {% csrf_token %}
                     <label for="type">Type de culture</label>
-                    <select id="type" name="type">
+                    <select id="type" name="type" required>
+                        <option value="">-- Sélectionner --</option>
                         <option value="Blé">Blé</option>
                         <option value="Maïs">Maïs</option>
                         <option value="Orge">Orge</option>
@@ -38,10 +40,11 @@
                     </select>
 
                     <label for="date_semis">Date de semis</label>
-                    <input id="date_semis" name="date_semis" type="date">
+                    <input id="date_semis" name="date_semis" type="date" required>
 
                     <label for="parcelle">Parcelle</label>
-                    <select id="parcelle" name="parcelle">
+                    <select id="parcelle" name="parcelle" required>
+                        <option value="">-- Sélectionner --</option>
                         {% for parcelle in parcelles %}
                         <option value="{{ parcelle.id }}">{{ parcelle.nom }} - {{ parcelle.localisation }}</option>
                         {% endfor %}

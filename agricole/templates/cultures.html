@@ -49,7 +49,10 @@
                             <td>
                                 <a href="{% url 'culture' culture.id %}"><button type="button">Voir</button></a>
                                 <a href="{% url 'edit_culture' culture.id %}"><button type="button">Modifier</button></a>
-                                <button>Supprimer</button>
+                                <form method="post" action="{% url 'delete_culture' culture.id %}" style="display:inline;">
+                                    {% csrf_token %}
+                                    <button type="submit" onclick="return confirm('Supprimer cette culture ?')">Supprimer</button>
+                                </form>
                             </td>
                         </tr>
                         {% endfor %}
