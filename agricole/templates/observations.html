@@ -25,33 +25,42 @@
         <main class="main-content">
             <header class="header">
                 <h1>Observations</h1>
-                <button class="add-btn">+ Nouvelle</button>
             </header>
             <section class="new-observation">
                 <h2>Nouvelle observation</h2>
-                <form>
+                <form method="POST" action="{% url 'add_observation' %}">
+                    {% csrf_token %}
                     <label for="parcel">Parcelle:</label>
-                    <select id="parcel">
-                        <option>Parcelle A</option>
-                        <option>Parcelle B</option>
+                    <select id="parcel" name="parcel" required>
+                        <option value="">-- Sélectionner une parcelle --</option>
+                        {% for parcelle in parcelles %}
+                            <option value="{{ parcelle.id }}">{{ parcelle.nom }}</option>
+                        {% endfor %}
                     </select>
-                    <label for="type">Type:</label>
-                    <select id="type">
-                        <option>Sol</option>
-                        <option>Plante</option>
+                    
+                    <label for="etat">État:</label>
+                    <select id="etat" name="etat" required>
+                        <option value="">-- Sélectionner un état --</option>
+                        <option value="OK">OK</option>
+                        <option value="Stress hydrique">Stress hydrique</option>
+                        <option value="Maladie détectée">Maladie détectée</option>
+                        <option value="Risque maladie">Risque maladie</option>
                     </select>
+                    
                     <label for="comment">Commentaire:</label>
-                    <textarea id="comment"></textarea>
-                    <label for="photo">Photo:</label>
-                    <input type="file" id="photo">
+                    <textarea id="comment" name="comment"></textarea>
+                    
                     <button type="submit">Enregistrer</button>
                 </form>
             </section>
             <section class="history">
                 <h2>Historique</h2>
                 <ul>
-                    <li>Parcelle A : "Sol sec" (aujourd’hui)</li>
-                    <li>Parcelle B : "Insectes observés" (hier)</li>
+                    {% for obs in observations %}
+                        <li>{{ obs.parcelle.nom }} :{% if obs.commentaire %} "{{ obs.commentaire }}"{% endif %} ({{ obs.etat }} - {{ obs.date|date:"j F Y" }})</li>
+                    {% empty %}
+                        <li>Aucune observation</li>
+                    {% endfor %}
                 </ul>
             </section>
         </main>
