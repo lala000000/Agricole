@@ -8,7 +8,7 @@ Nous avons développé une application permettant d’aider les agriculteurs à 
 
 ## Objectif
 
-Nous proposons une application web qui permettant :
+Nous proposons une application web permettant :
 
 - la gestion des parcelles agricoles
 - l’ajout d’observations terrain  
@@ -21,7 +21,7 @@ Le projet vise la réalisation d’un MVP fonctionnel.
 
 ## Technologies utilisées
 
-- Frontend : HTML / CSS / Python  
+- Frontend : HTML / CSS  
 - Backend : Django (framework backend utilisé pour gérer la logique serveur)  
 - Base de données : SQLite (base de données légère utilisée pour stocker les données)
 - Déploiement : Machine virtuelle  
@@ -69,6 +69,15 @@ Les principales tables sont :
 - Météo  
 - Alertes  
 
+
+Modélisation : 
+- MCD réalisé 
+- MLD réalisé 
+
+Le projet repose sur un jeu de données fourni par l’école, ces données ont été conçues pour simuler un environnement agricole réaliste et permettent de tester l’ensemble des fonctionnalités de l’application (gestion des parcelles, observations, alertes et visualisation).
+
+Le système ne repose pas sur des données en temps réel dans cette version du MVP.
+
 ---
 
 ## Démonstration
@@ -92,14 +101,12 @@ Utilisateur → Frontend → Backend (Django) → Base de données (SQLite)
 
 ## Installation
 
-À compléter :
-- installation des dépendances
-- lancement du serveur
-- configuration du projet
-
-## Installation
-
 git clone <repo>
 cd projet
+
+python -m venv venv
+venv\Scripts\activate   # Windows
+source venv/bin/activate  # Linux / Mac
+
 pip install -r requirements.txt
 python manage.py runserver
