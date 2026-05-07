@@ -106,42 +106,24 @@ Relations principales :
 
 #### 2. MLD (Modèle Logique de Données)
 
+Le MLD représente l’organisation des tables et des relations de la base de données.
 
-Le MLD représente l’organisation des tables, des champs et des relations utilisées dans la base de données.
+Le schéma complet est disponible dans les annexes.
 
-Le schéma complet du MLD est disponible dans les annexes du projet.
-
----
-
-Le projet utilise un jeu de données fourni par l’école afin de simuler un environnement agricole réaliste.
-
-Ces données permettent de tester les principales fonctionnalités de l’application :
-- gestion des parcelles
-- suivi des cultures
-- observations terrain
-- système d’alertes
-- visualisation des données
+Le projet utilise un jeu de données fourni par l’école afin de simuler un environnement agricole réaliste et tester les fonctionnalités de l’application.
 
 Cette version correspond à un MVP et ne repose pas sur des données en temps réel.
 
----
 
 ## Démonstration
 
-L’utilisateur peut :
+L’utilisateur peut interagir avec l’application de la manière suivante :
 
-- consulter un tableau de bord des données agricoles
+- accéder au tableau de bord pour consulter les données agricoles
 - créer et gérer des parcelles
 - ajouter des observations terrain
-- visualiser les alertes générées automatiquement
+- visualiser automatiquement les alertes générées par le système
 
----
-
-## Architecture
-
-
-
----
 
 ## Installation
 
@@ -223,6 +205,4 @@ http://127.0.0.1:8000
 --- 
 ## Conclusion
 
-Ce projet répond à une problématique réelle du secteur agricole en proposant une solution de suivi et d’analyse des cultures.
-
-Il permet de centraliser les données, de les structurer et de les exploiter via des règles métier simples afin d’améliorer la prise de décision.
+Ce projet répond à une problématique réelle du secteur agricole en proposant une solution permettant de centraliser les données, de les analyser et d’améliorer la prise de décision grâce à un système d’alertes simple et efficace.
