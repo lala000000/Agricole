@@ -35,11 +35,11 @@ Le projet vise la réalisation d’un MVP fonctionnel.
 
 ### Justification des choix techniques
 
-| Technologie | Choix réalisé | Justification |
+| Technologie | Choix | Justification |
 |---|---|---|
 | Frontend | HTML / CSS | Création d’une interface simple, légère et adaptée au MVP |
 | Backend | Django (Python) | Framework structuré permettant un développement rapide et une gestion simplifiée de la logique métier |
-| Base de données | SQLite | Solution légère et facile à intégrer avec Django, adaptée à un prototype |
+| Base de données | SQLite | Solution légère et facile à intégrer avec Django |
 | Déploiement | Machine virtuelle | Permet de simuler un environnement serveur et d’isoler le projet |
 | Gestion de version | GitHub | Suivi du développement, gestion des versions et travail collaboratif |
 
@@ -85,19 +85,9 @@ Le système analyse les données à partir de règles métier simples afin d’i
 
 ## Base de données
 
-Les principales tables sont :
+### Modélisation :  
 
-- Parcelles  
-- Cultures  
-- Observations  
-- Météo  
-- Alertes  
-
-
-Modélisation : 
---- 
-
-### MCD (Modèle Conceptuel de Données)
+#### 1. MCD (Modèle Conceptuel de Données)
 
 Le MCD représente les entités principales du système et leurs relations :
 
@@ -114,24 +104,25 @@ Relations principales :
 
 ---
 
-### MLD (Modèle Logique de Données)
-
-Le MLD transforme le MCD en tables relationnelles :
+#### 2. MLD (Modèle Logique de Données)
 
 
+Le MLD représente l’organisation des tables, des champs et des relations utilisées dans la base de données.
 
-| Table        | Description | Champs |
-|--------------|-------------|--------|
-| PARCELLE     | Représente les zones agricoles | id, nom, localisation, surface_ha |
-| CULTURE      | Cultures associées aux parcelles | id, type, date_semis, parcelle_id |
-| OBSERVATION  | Suivi terrain des parcelles | id, date, etat, commentaire, parcelle_id |
-| METEO        | Données météorologiques | id, date, temperature, humidite, pluie_mm |
-| ALERTE       | Alertes générées par le système | id, date, type, niveau, parcelle_id |
+Le schéma complet du MLD est disponible dans les annexes du projet.
 
-Le projet repose sur un jeu de données fourni par l’école, ces données ont été conçues pour simuler un environnement agricole réaliste 
-et permettent de tester l’ensemble des fonctionnalités de l’application (gestion des parcelles, observations, alertes et visualisation).
+---
 
-Le système ne repose pas sur des données en temps réel dans cette version du MVP.
+Le projet utilise un jeu de données fourni par l’école afin de simuler un environnement agricole réaliste.
+
+Ces données permettent de tester les principales fonctionnalités de l’application :
+- gestion des parcelles
+- suivi des cultures
+- observations terrain
+- système d’alertes
+- visualisation des données
+
+Cette version correspond à un MVP et ne repose pas sur des données en temps réel.
 
 ---
 
