@@ -7,8 +7,6 @@ Dans un contexte de transformation numérique du secteur agricole, les acteurs d
 
 Les informations agricoles étant souvent dispersées et difficiles à exploiter, il devient nécessaire de proposer une solution numérique centralisée permettant de les structurer, les visualiser et les analyser simplement.
 
-
-
 ## Problématique
 
 **Comment une application web peut-elle aider les agriculteurs à suivre leurs cultures et à améliorer leur prise de décision ?**
@@ -33,6 +31,17 @@ Le projet vise la réalisation d’un MVP fonctionnel.
 - Base de données : SQLite (base de données légère utilisée pour stocker les données)
 - Déploiement : Machine virtuelle  
 - Gestion de version : GitHub   
+
+
+### Justification des choix techniques
+
+| Technologie | Choix réalisé | Justification |
+|---|---|---|
+| Frontend | HTML / CSS | Création d’une interface simple, légère et adaptée au MVP |
+| Backend | Django (Python) | Framework structuré permettant un développement rapide et une gestion simplifiée de la logique métier |
+| Base de données | SQLite | Solution légère et facile à intégrer avec Django, adaptée à un prototype |
+| Déploiement | Machine virtuelle | Permet de simuler un environnement serveur et d’isoler le projet |
+| Gestion de version | GitHub | Suivi du développement, gestion des versions et travail collaboratif |
 
 
 ## Fonctionnalités
