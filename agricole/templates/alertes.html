@@ -32,6 +32,13 @@
           <a href="{% url 'alertes' %}?status=all" class="filter-btn {% if status == 'all' %}active{% endif %}">Toutes ({{ total_alerte }})</a>
           <a href="{% url 'alertes' %}?status=nonvu" class="filter-btn {% if status == 'nonvu' %}active{% endif %}">Non lues ({{ unseen_alerte }})</a>
           <a href="{% url 'alertes' %}?status=vu" class="filter-btn {% if status == 'vu' %}active{% endif %}">Lues ({{ seen_alerte }})</a>
+          
+          {% if unseen_alerte > 0 %}
+          <form method="post" action="{% url 'mark_all_alerts_read' %}" style="display:inline;">
+            {% csrf_token %}
+            <button type="submit" class="mark-all-btn">✓ Marquer tout comme lu</button>
+          </form>
+          {% endif %}
         </div>
 
         <ul>

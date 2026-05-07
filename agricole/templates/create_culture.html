@@ -32,14 +32,12 @@
             <section class="content-section">
                 <form method="post" action="{% url 'create_culture' %}">
                     {% csrf_token %}
-                    <label for="type">Type de culture</label>
-                    <select id="type" name="type" required>
+                    <label for="plante">Type de culture</label>
+                    <select id="plante" name="plante" required>
                         <option value="">-- Sélectionner --</option>
-                        <option value="Blé">Blé</option>
-                        <option value="Maïs">Maïs</option>
-                        <option value="Orge">Orge</option>
-                        <option value="Tournesol">Tournesol</option>
-                        <option value="Colza">Colza</option>
+                        {% for plante in plantes %}
+                        <option value="{{ plante.nom }}">{{ plante.nom }}</option>
+                        {% endfor %}
                     </select>
 
                     <label for="date_semis">Date de semis</label>

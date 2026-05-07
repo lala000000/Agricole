@@ -3,7 +3,7 @@ from django.http import HttpResponse
 from django.template import loader
 from django.shortcuts import redirect, get_object_or_404
 from django.contrib.auth.models import User
-from .models import Meteo, Observation, Parcelle, Alerte, Culture
+from .models import Meteo, Observation, Parcelle, Alerte, Culture, Plante
 
 def get_alertes_count():
   """Retourne le nombre d'alertes non lues"""
@@ -53,7 +53,7 @@ def dashboard(request):
 
 def cultures(request):
   template = loader.get_template('cultures.html')
-  cultures = Culture.objects.select_related('parcelle').all()
+  cultures = Culture.objects.select_related('parcelle', 'plante').all()
   context = {
     'nbralerte': get_alertes_count(),
     'cultures': cultures,
@@ -61,7 +61,7 @@ def cultures(request):
   return HttpResponse(template.render(context, request))
 
 def culture(request, id):
-  culture = get_object_or_404(Culture.objects.select_related('parcelle'), id=id)
+  culture = get_object_or_404(Culture.objects.select_related('parcelle', 'plante'), id=id)
   template = loader.get_template('culture.html')
   context = {
     'nbralerte': get_alertes_count(),
@@ -71,12 +71,19 @@ def culture(request, id):
 
 def create_culture(request):
   if request.method == 'POST':
-    type_culture = request.POST.get('type')
+    raw_plante = (request.POST.get('plante') or request.POST.get('type') or '').strip()
     date_semis = request.POST.get('date_semis')
     parcelle_id = request.POST.get('parcelle')
+
     parcelle = get_object_or_404(Parcelle, id=parcelle_id)
+
+    if raw_plante.isdigit():
+      plante = get_object_or_404(Plante, id=int(raw_plante))
+    else:
+      plante = get_object_or_404(Plante, nom=raw_plante)
+
     Culture.objects.create(
-      type=type_culture,
+      plante=plante,
       date_semis=date_semis,
       parcelle=parcelle,
     )
@@ -86,17 +93,25 @@ def create_culture(request):
   context = {
     'nbralerte': get_alertes_count(),
     'parcelles': Parcelle.objects.all(),
+    'plantes': Plante.objects.all(),
   }
   return HttpResponse(template.render(context, request))
 
 def edit_culture(request, id):
-  culture = get_object_or_404(Culture.objects.select_related('parcelle'), id=id)
+  culture = get_object_or_404(Culture.objects.select_related('parcelle', 'plante'), id=id)
 
   if request.method == 'POST':
-    culture.type = request.POST.get('type')
+    raw_plante = (request.POST.get('plante') or request.POST.get('type') or '').strip()
     culture.date_semis = request.POST.get('date_semis')
+
     parcelle_id = request.POST.get('parcelle')
-    culture.parcelle = Parcelle.objects.get(id=parcelle_id)
+    culture.parcelle = get_object_or_404(Parcelle, id=parcelle_id)
+
+    if raw_plante.isdigit():
+      culture.plante = get_object_or_404(Plante, id=int(raw_plante))
+    else:
+      culture.plante = get_object_or_404(Plante, nom=raw_plante)
+
     culture.save()
     return redirect('cultures')
 
@@ -105,6 +120,7 @@ def edit_culture(request, id):
     'nbralerte': get_alertes_count(),
     'culture': culture,
     'parcelles': Parcelle.objects.all(),
+    'plantes': Plante.objects.all(),
   }
   return HttpResponse(template.render(context, request))
 
@@ -162,8 +178,8 @@ def add_observation(request):
     parcelle_id = request.POST.get('parcel')
     etat = request.POST.get('etat')
     commentaire = request.POST.get('comment')
-    
-    parcelle = Parcelle.objects.get(id=parcelle_id)
+
+    parcelle = get_object_or_404(Parcelle, id=parcelle_id)
     Observation.objects.create(
       parcelle=parcelle,
       etat=etat,
@@ -171,7 +187,7 @@ def add_observation(request):
       date=datetime.date.today()
     )
     return redirect('observations')
-  
+
   return redirect('observations')
 
 def parcel(request, id):
@@ -271,3 +287,8 @@ def settings(request):
     'nbralerte' : get_alertes_count()
   }
   return HttpResponse(template.render(context, request))
+
+def mark_all_alerts_read(request):
+  if request.method == 'POST':
+    Alerte.objects.filter(est_lue=False).update(est_lue=True)
+  return redirect(request.META.get('HTTP_REFERER', 'alertes'))

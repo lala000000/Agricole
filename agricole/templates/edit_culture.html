@@ -32,13 +32,13 @@
             <section class="content-section">
                 <form method="post" action="{% url 'edit_culture' culture.id %}">
                     {% csrf_token %}
-                    <label for="type">Type de culture</label>
-                    <select id="type" name="type" required>
-                        <option value="Blé" {% if culture.type == 'Blé' %}selected{% endif %}>Blé</option>
-                        <option value="Maïs" {% if culture.type == 'Maïs' %}selected{% endif %}>Maïs</option>
-                        <option value="Orge" {% if culture.type == 'Orge' %}selected{% endif %}>Orge</option>
-                        <option value="Tournesol" {% if culture.type == 'Tournesol' %}selected{% endif %}>Tournesol</option>
-                        <option value="Colza" {% if culture.type == 'Colza' %}selected{% endif %}>Colza</option>
+                    <label for="plante">Type de culture</label>
+                    <select id="plante" name="plante" required>
+                        {% for plante in plantes %}
+                        <option value="{{ plante.nom }}" {% if plante.id == culture.plante.id %}selected{% endif %}>
+                            {{ plante.nom }}
+                        </option>
+                        {% endfor %}
                     </select>
 
                     <label for="date_semis">Date de semis</label>
