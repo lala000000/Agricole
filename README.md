@@ -108,8 +108,6 @@ Relations principales :
 
 Le MLD représente l’organisation des tables et des relations de la base de données.
 
-Le schéma complet est disponible dans les annexes.
-
 Le projet utilise un jeu de données fourni par l’école afin de simuler un environnement agricole réaliste et tester les fonctionnalités de l’application.
 
 Cette version correspond à un MVP et ne repose pas sur des données en temps réel.
@@ -211,8 +209,24 @@ Ouvrir le navigateur à l’adresse suivante :
 ```text
 http://127.0.0.1:8000
 ```
-
 --- 
+
+## Limites et améliorations
+
+Ce MVP constitue une première version fonctionnelle de l’application.
+
+Certaines améliorations possibles :
+
+- intégration de données météo en temps réel
+- ajout de graphiques d’évolution des cultures
+- mise en place d’un système d’intelligence prédictive
+- déploiement cloud pour un usage à grande échelle
+
+
 ## Conclusion
 
-Ce projet répond à une problématique réelle du secteur agricole en proposant une solution permettant de centraliser les données, de les analyser et d’améliorer la prise de décision grâce à un système d’alertes simple et efficace.
+Ce projet nous a permis de concevoir une application de suivi agricole répondant à un besoin concret, centraliser et rendre exploitables des données liées aux parcelles et aux cultures.
+
+L’application facilite le suivi des informations agricoles et aide à identifier certaines situations à risque grâce à des règles métier simples.
+
+Ce travail constitue une première version fonctionnelle (MVP) qui pourrait être améliorée par la suite avec l’ajout de données en temps réel, de visualisations plus avancées et un déploiement sur une infrastructure cloud.
