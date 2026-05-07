@@ -25,7 +25,10 @@
         <main class="main-content">
             <header class="header">
                 <h1>{{ parcelle.nom }}</h1>
-                <a href="{% url 'edit_parcelle' parcelle.id %}"><button class="edit-btn">Modifier</button></a>
+                <div class="actions">
+                    <a href="{% url 'parcels' %}" class="back-btn">Précédent</a>
+                    <a href="{% url 'edit_parcelle' parcelle.id %}"><button class="edit-btn">Modifier</button></a>
+                </div>
             </header>
 
             <section class="parcel-info">

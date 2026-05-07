@@ -18,5 +18,6 @@ urlpatterns = [
     path('parcel/<int:id>/delete/', views.delete_parcelle, name='delete_parcelle'),
     path('parcels/', views.parcels, name='parcels'),
     path('profile/', views.profile, name='profile'),
+    path('profile/edit/', views.edit_profile, name='edit_profile'),
     path('settings/', views.settings, name='settings'),
 ]

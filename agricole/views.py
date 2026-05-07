@@ -2,6 +2,7 @@ import datetime
 from django.http import HttpResponse
 from django.template import loader
 from django.shortcuts import redirect, get_object_or_404
+from django.contrib.auth.models import User
 from .models import Meteo, Observation, Parcelle, Alerte, Culture
 
 def get_alertes_count():
@@ -220,7 +221,24 @@ def delete_parcelle(request, id):
 def profile(request):
   template = loader.get_template('profile.html')
   context = {
-    'nbralerte' : get_alertes_count()
+    'nbralerte' : get_alertes_count(),
+    'user': request.user,
+  }
+  return HttpResponse(template.render(context, request))
+
+def edit_profile(request):
+  user = request.user
+
+  if request.method == 'POST':
+    user.username = request.POST.get('username')
+    user.email = request.POST.get('email')
+    user.save()
+    return redirect('profile')
+
+  template = loader.get_template('edit_profile.html')
+  context = {
+    'nbralerte': get_alertes_count(),
+    'user': user,
   }
   return HttpResponse(template.render(context, request))
 

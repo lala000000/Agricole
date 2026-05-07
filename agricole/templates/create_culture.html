@@ -25,6 +25,9 @@
         <main class="main-content">
             <header class="header">
                 <h1>Nouvelle culture</h1>
+                <div class="actions">
+                    <a href="{% url 'cultures' %}" class="back-btn">Précédent</a>
+                </div>
             </header>
             <section class="content-section">
                 <form method="post" action="{% url 'create_culture' %}">
