@@ -159,8 +159,8 @@ Avant de lancer le projet, les éléments suivants doivent être installés :
 ##### 1. Cloner le projet
 
 ```bash
-git clone <URL_DU_REPO>
-cd projet-agricole
+git clone https://github.com/lala000000/Agricole.git
+cd Agricole
 ```
 
 ---
