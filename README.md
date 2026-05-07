@@ -124,6 +124,16 @@ L’utilisateur peut interagir avec l’application de la manière suivante :
 - ajouter des observations terrain
 - visualiser automatiquement les alertes générées par le système
 
+---
+*Exemple de scénario utilisateur :*
+
+| Étape | Ce que fait l’utilisateur | Ce que l’application fait |
+|---|---|---|
+| 1 | Il ouvre une parcelle (ex : Parcelle 3) | L’application affiche les informations de la parcelle |
+| 2 | Il regarde l’état des cultures | Il voit par exemple : sol sec, feuilles jaunies |
+| 3 | Il ajoute une observation terrain | L’information est enregistrée dans la base de données |
+| 4 | L’application analyse les données | Elle détecte un risque (ex : maladie possible) |
+| 5 | Une alerte apparaît | L’utilisateur est informé qu’il faut agir |
 
 ## Installation
 
