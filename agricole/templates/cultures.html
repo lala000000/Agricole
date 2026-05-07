@@ -42,16 +42,16 @@
                     <tbody>
                         {% for culture in cultures %}
                         <tr>
-                            <td>{{ culture.id }}</td>
-                            <td>{{ culture.type }}</td>
-                            <td>{{ culture.date_semis }}</td>
-                            <td>{{ culture.parcelle.nom }}</td>
-                            <td>
-                                <a href="{% url 'culture' culture.id %}"><button type="button">Voir</button></a>
-                                <a href="{% url 'edit_culture' culture.id %}"><button type="button">Modifier</button></a>
+                            <td data-label="ID">{{ culture.id }}</td>
+                            <td data-label="Type">{{ culture.type }}</td>
+                            <td data-label="Date de semis">{{ culture.date_semis }}</td>
+                            <td data-label="Parcelle">{{ culture.parcelle.nom }}</td>
+                            <td data-label="Actions">
+                                <a href="{% url 'culture' culture.id %}"><button type="button" class="table-action-btn">Voir</button></a>
+                                <a href="{% url 'edit_culture' culture.id %}"><button type="button" class="table-action-btn">Modifier</button></a>
                                 <form method="post" action="{% url 'delete_culture' culture.id %}" style="display:inline;">
                                     {% csrf_token %}
-                                    <button type="submit" onclick="return confirm('Supprimer cette culture ?')">Supprimer</button>
+                                    <button type="submit" class="table-action-btn" onclick="return confirm('Supprimer cette culture ?')">Supprimer</button>
                                 </form>
                             </td>
                         </tr>
