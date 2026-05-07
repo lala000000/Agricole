@@ -118,14 +118,37 @@ def delete_culture(request, id):
   return redirect('cultures')
 
 def alertes(request):
+  status = request.GET.get('status', 'all')  # 'all', 'nonvu', 'vu'
+  alertes = Alerte.objects.select_related('parcelle').order_by('-date')
+  if status == 'nonvu':
+    alertes = alertes.filter(est_lue=False)
+  elif status == 'vu':
+    alertes = alertes.filter(est_lue=True)
+
+  total = Alerte.objects.count()
+  unseen = Alerte.objects.filter(est_lue=False).count()
+  seen = total - unseen
+
   template = loader.get_template('alertes.html')
   context = {
-    'nbralerte' : get_alertes_count()
+    'nbralerte': get_alertes_count(),
+    'alertes': alertes,
+    'status': status,
+    'total_alerte': total,
+    'unseen_alerte': unseen,
+    'seen_alerte': seen,
   }
   return HttpResponse(template.render(context, request))
 
+def toggle_alerte(request, id):
+  alerte = get_object_or_404(Alerte, id=id)
+  if request.method == 'POST':
+    alerte.est_lue = not alerte.est_lue
+    alerte.save()
+  return redirect(request.META.get('HTTP_REFERER', '/alertes/'))
+
 def observations(request):
-  allobservations = Observation.objects.all().order_by('-date')[:10]
+  allobservations = Observation.objects.all().order_by('-date')
   template = loader.get_template('observations.html')
   context = {
     'nbralerte': get_alertes_count(),

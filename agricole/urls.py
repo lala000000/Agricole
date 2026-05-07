@@ -10,6 +10,7 @@ urlpatterns = [
     path('culture/<int:id>/edit/', views.edit_culture, name='edit_culture'),
     path('culture/<int:id>/delete/', views.delete_culture, name='delete_culture'),
     path('alertes/', views.alertes, name='alertes'),
+    path('alertes/<int:id>/toggle/', views.toggle_alerte, name='toggle_alerte'),
     path('observations/', views.observations, name='observations'),
     path('observations/add/', views.add_observation, name='add_observation'),
     path('parcel/new/', views.create_parcelle, name='create_parcelle'),
