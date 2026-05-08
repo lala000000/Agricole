@@ -1,0 +1,66 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nouvelle alerte</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+    <div class="container">
+        <aside class="sidebar">
+            <h2>Menu</h2>
+            <ul>
+                <li><a href="{% url 'home' %}">Tableau de bord</a></li>
+                <li><a href="{% url 'cultures' %}">Cultures</a></li>
+                <li><a href="{% url 'parcels' %}">Parcelles</a></li>
+                <li><a href="{% url 'observations' %}">Observations</a></li>
+                <li><a href="{% url 'alertes' %}">Alertes ({{ nbralerte }})</a></li>
+                <li><a href="{% url 'profile' %}">Profil</a></li>
+                <li><a href="{% url 'settings' %}">Paramètres</a></li>
+            </ul>
+        </aside>
+
+        <main class="main-content">
+            <header class="header">
+                <h1>Créer une alerte</h1>
+                <div class="actions">
+                    <a href="{% url 'alertes' %}" class="back-btn">Précédent</a>
+                </div>
+            </header>
+            <section class="content-section">
+                <form method="post" action="{% url 'create_alerte' %}">
+                    {% csrf_token %}
+                    <label for="parcelle">Parcelle</label>
+                    <select id="parcelle" name="parcelle" required>
+                        <option value="">-- Sélectionner --</option>
+                        {% for parcelle in parcelles %}
+                        <option value="{{ parcelle.id }}">{{ parcelle.nom }} - {{ parcelle.localisation }}</option>
+                        {% endfor %}
+                    </select>
+
+                    <label for="type">Type d'alerte</label>
+                    <input id="type" name="type" type="text" placeholder="Ex: Risque maladie" required>
+
+                    <label for="niveau">Niveau</label>
+                    <select id="niveau" name="niveau" required>
+                        <option value="">-- Sélectionner --</option>
+                        <option value="1">Faible</option>
+                        <option value="2">Moyen</option>
+                        <option value="3">Critique</option>
+                    </select>
+
+                    <label for="description">Description</label>
+                    <textarea id="description" name="description" placeholder="Décrivez l'alerte..."></textarea>
+
+                    <label for="recommandation">Recommandation</label>
+                    <textarea id="recommandation" name="recommandation" placeholder="Recommandations pour traiter l'alerte..."></textarea>
+
+                    <button type="submit">Créer l'alerte</button>
+                </form>
+            </section>
+        </main>
+    </div>
+</body>
+</html>

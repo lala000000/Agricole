@@ -134,7 +134,7 @@ def delete_culture(request, id):
   return redirect('cultures')
 
 def alertes(request):
-  status = request.GET.get('status', 'all')  # 'all', 'nonvu', 'vu'
+  status = request.GET.get('status', 'nonvu')  # 'all', 'nonvu', 'vu'
   alertes = Alerte.objects.select_related('parcelle').order_by('-date')
   if status == 'nonvu':
     alertes = alertes.filter(est_lue=False)
