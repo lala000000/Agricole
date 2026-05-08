@@ -211,6 +211,16 @@ http://127.0.0.1:8000
 ```
 --- 
 
+##### 8. Générer les alertes 
+
+```bash
+python manage.py generate_alerts
+```
+**Options :**
+- `--days N` (N = nombre de jours, défaut = 7)
+- `--force` (supprime les alertes existantes)
+
+
 ## Limites et améliorations
 
 Ce MVP constitue une première version fonctionnelle de l’application.
