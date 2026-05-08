@@ -1,0 +1,62 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modifier la culture</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+    <div class="container">
+        <aside class="sidebar">
+            <h2>Menu</h2>
+            <ul>
+                <li><a href="{% url 'home' %}">Tableau de bord</a></li>
+                <li><a href="{% url 'cultures' %}">Cultures</a></li>
+                <li><a href="{% url 'parcels' %}">Parcelles</a></li>
+                <li><a href="{% url 'observations' %}">Observations</a></li>
+                <li><a href="{% url 'alertes' %}">Alertes ({{ nbralerte }})</a></li>
+                <li><a href="{% url 'profile' %}">Profil</a></li>
+                <li><a href="{% url 'settings' %}">Paramètres</a></li>
+            </ul>
+        </aside>
+
+        <main class="main-content">
+            <header class="header">
+                <h1>Modifier la culture</h1>
+                <div class="actions">
+                    <a href="{% url 'cultures' %}" class="back-btn">Précédent</a>
+                </div>
+            </header>
+            <section class="content-section">
+                <form method="post" action="{% url 'edit_culture' culture.id %}">
+                    {% csrf_token %}
+                    <label for="plante">Type de culture</label>
+                    <select id="plante" name="plante" required>
+                        {% for plante in plantes %}
+                        <option value="{{ plante.nom }}" {% if plante.id == culture.plante.id %}selected{% endif %}>
+                            {{ plante.nom }}
+                        </option>
+                        {% endfor %}
+                    </select>
+
+                    <label for="date_semis">Date de semis</label>
+                    <input id="date_semis" name="date_semis" type="date" value="{{ culture.date_semis|date:'Y-m-d' }}" required>
+
+                    <label for="parcelle">Parcelle</label>
+                    <select id="parcelle" name="parcelle" required>
+                        {% for parcelle in parcelles %}
+                        <option value="{{ parcelle.id }}" {% if parcelle.id == culture.parcelle.id %}selected{% endif %}>
+                            {{ parcelle.nom }} - {{ parcelle.localisation }}
+                        </option>
+                        {% endfor %}
+                    </select>
+
+                    <button type="submit">Enregistrer</button>
+                </form>
+            </section>
+        </main>
+    </div>
+</body>
+</html>

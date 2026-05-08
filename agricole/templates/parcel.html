@@ -1,12 +1,11 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="fr">
-    <link rel="stylesheet" href="{% static 'style.css' %}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Parcelle A</title>
-    <link rel="stylesheet" href="../style.css">
+    <title>{{ parcelle.nom }}</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
 </head>
 <body>
     <div class="container">
@@ -14,6 +13,7 @@
             <h2>Menu</h2>
             <ul>
                 <li><a href="{% url 'home' %}">Tableau de bord</a></li>
+                <li><a href="{% url 'cultures' %}">Cultures</a></li>
                 <li><a href="{% url 'parcels' %}">Parcelles</a></li>
                 <li><a href="{% url 'observations' %}">Observations</a></li>
                 <li><a href="{% url 'alertes' %}">Alertes ({{nbralerte}})</a></li>
@@ -21,32 +21,64 @@
                 <li><a href="{% url 'settings' %}">Paramètres</a></li>
             </ul>
         </aside>
+
         <main class="main-content">
             <header class="header">
-                <h1>Parcelle A</h1>
-                <button class="edit-btn">Modifier</button>
+                <h1>{{ parcelle.nom }}</h1>
+                <div class="actions">
+                    <a href="{% url 'parcels' %}" class="back-btn">Précédent</a>
+                    <a href="{% url 'edit_parcelle' parcelle.id %}"><button class="edit-btn">Modifier</button></a>
+                </div>
             </header>
+
             <section class="parcel-info">
                 <h2>Informations</h2>
                 <ul>
-                    <li>Culture : Blé</li>
-                    <li>Surface : 2,4 ha</li>
-                    <li>Zone : Nord</li>
+                    <li>
+                        Culture :
+                        {% for culture in parcelle.cultures.all %}
+                            {{ culture.type }}{% if not forloop.last %}, {% endif %}
+                        {% empty %}
+                            Aucune
+                        {% endfor %}
+                    </li>
+                    <li>Surface : {{ parcelle.surface_ha }} ha</li>
+                    <li>Zone : {{ parcelle.localisation }}</li>
                 </ul>
             </section>
+
             <section class="indicators">
                 <h2>Indicateurs</h2>
                 <ul>
-                    <li>Température : 18°C</li>
-                    <li>Humidité : 78%</li>
-                    <li>Risque : Moyen</li>
+                    {% with derniere_obs=parcelle.observations.all|first %}
+                        <li>
+                            État :
+                            {% if derniere_obs %}{{ derniere_obs.etat }}{% else %}Aucun{% endif %}
+                        </li>
+                        <li>
+                            Commentaire :
+                            {% if derniere_obs %}{{ derniere_obs.commentaire }}{% else %}N/A{% endif %}
+                        </li>
+                        <li>
+                            Date :
+                            {% if derniere_obs %}{{ derniere_obs.date|date:"j F Y" }}{% else %}N/A{% endif %}
+                        </li>
+                    {% endwith %}
                 </ul>
             </section>
+
             <section class="history">
                 <h2>Historique</h2>
                 <ul>
-                    <li>04/05 : "Feuilles jaunies"</li>
-                    <li>03/05 : "Sol humide"</li>
+                    {% with derniere_obs=parcelle.observations.all|first %}
+                        {% for obs in parcelle.observations.all %}
+                            {% if obs.id != derniere_obs.id %}
+                                <li>{{ obs.date|date:"j F Y" }} - {{ obs.etat }}{% if obs.commentaire %} : {{ obs.commentaire }}{% endif %}</li>
+                            {% endif %}
+                        {% empty %}
+                            <li>Aucune observation</li>
+                        {% endfor %}
+                    {% endwith %}
                 </ul>
             </section>
         </main>

@@ -1,0 +1,68 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cultures</title>
+    <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+    <div class="container">
+        <aside class="sidebar">
+            <h2>Menu</h2>
+            <ul>
+                <li><a href="{% url 'home' %}">Tableau de bord</a></li>
+                <li><a href="{% url 'cultures' %}">Cultures</a></li>
+                <li><a href="{% url 'parcels' %}">Parcelles</a></li>
+                <li><a href="{% url 'observations' %}">Observations</a></li>
+                <li><a href="{% url 'alertes' %}">Alertes ({{ nbralerte }})</a></li>
+                <li><a href="{% url 'profile' %}">Profil</a></li>
+                <li><a href="{% url 'settings' %}">Paramètres</a></li>
+            </ul>
+        </aside>
+        <main class="main-content">
+            <header class="header">
+                <h1>Cultures</h1>
+                <a href="{% url 'create_culture' %}"><button class="add-btn">+ Ajouter</button></a>
+            </header>
+            <section class="parcels-list">
+                {% if cultures %}
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Type</th>
+                            <th>Date de semis</th>
+                            <th>Parcelle</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for culture in cultures %}
+                        <tr>
+                            <td data-label="ID">{{ culture.id }}</td>
+                            <td data-label="Type">{{ culture.plante.nom }}</td>
+                            <td data-label="Date de semis">{{ culture.date_semis }}</td>
+                            <td data-label="Parcelle">{{ culture.parcelle.nom }}</td>
+                            <td data-label="Actions">
+                                <a href="{% url 'culture' culture.id %}"><button type="button" class="table-action-btn">Voir</button></a>
+                                <a href="{% url 'edit_culture' culture.id %}"><button type="button" class="table-action-btn">Modifier</button></a>
+                                <form method="post" action="{% url 'delete_culture' culture.id %}" style="display:inline;">
+                                    {% csrf_token %}
+                                    <button type="submit" class="table-action-btn" onclick="return confirm('Supprimer cette culture ?')">Supprimer</button>
+                                </form>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                {% else %}
+                <p>Aucune culture trouvée.</p>
+                {% endif %}
+            </section>
+        </main>
+    </div>
+</body>
+</html>

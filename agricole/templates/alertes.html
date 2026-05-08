@@ -1,45 +1,62 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="fr">
-    <link rel="stylesheet" href="{% static 'style.css' %}">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Alertes</title>
-    <link rel="stylesheet" href="../style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Alertes</title>
+  <link rel="stylesheet" href="{% static 'style.css' %}">
 </head>
 <body>
-    <div class="container">
-        <aside class="sidebar">
-            <h2>Menu</h2>
-            <ul>
-                <li><a href="{% url 'home' %}">Tableau de bord</a></li>
-                <li><a href="{% url 'parcels' %}">Parcelles</a></li>
-                <li><a href="{% url 'observations' %}">Observations</a></li>
-                <li><a href="{% url 'alertes' %}">Alertes ({{nbralerte}})</a></li>
-                <li><a href="{% url 'profile' %}">Profil</a></li>
-                <li><a href="{% url 'settings' %}">Paramètres</a></li>
-            </ul>
-        </aside>
-        <main class="main-content">
-            <header class="header">
-                <h1>Alertes</h1>
-            </header>
-            <section class="alerts-list">
-                <h2>Liste des alertes</h2>
-                <ul>
-                    <li>Parcelle A | Risque maladie | Critique</li>
-                    <li>Parcelle C | Vent fort | Moyen</li>
-                </ul>
-            </section>
-            <section class="rules">
-                <h2>Règles métier</h2>
-                <ul>
-                    <li>Humidité > 80% + Température > 18°C</li>
-                    <li>Vent > 40 km/h</li>
-                </ul>
-            </section>
-        </main>
-    </div>
+  <div class="container">
+    <aside class="sidebar">
+      <h2>Menu</h2>
+      <ul>
+        <li><a href="{% url 'home' %}">Tableau de bord</a></li>
+        <li><a href="{% url 'cultures' %}">Cultures</a></li>
+        <li><a href="{% url 'parcels' %}">Parcelles</a></li>
+        <li><a href="{% url 'observations' %}">Observations</a></li>
+        <li><a href="{% url 'alertes' %}">Alertes ({{ nbralerte }})</a></li>
+        <li><a href="{% url 'profile' %}">Profil</a></li>
+        <li><a href="{% url 'settings' %}">Paramètres</a></li>
+      </ul>
+    </aside>
+
+    <main class="main-content">
+      <header class="header">
+        <h1>Alertes</h1>
+      </header>
+
+      <section class="alerts-list">
+        <div class="filters">
+          <a href="{% url 'alertes' %}?status=all" class="filter-btn {% if status == 'all' %}active{% endif %}">Toutes ({{ total_alerte }})</a>
+          <a href="{% url 'alertes' %}?status=nonvu" class="filter-btn {% if status == 'nonvu' %}active{% endif %}">Non lues ({{ unseen_alerte }})</a>
+          <a href="{% url 'alertes' %}?status=vu" class="filter-btn {% if status == 'vu' %}active{% endif %}">Lues ({{ seen_alerte }})</a>
+          
+          {% if unseen_alerte > 0 %}
+          <form method="post" action="{% url 'mark_all_alerts_read' %}" style="display:inline;">
+            {% csrf_token %}
+            <button type="submit" class="mark-all-btn">✓ Marquer tout comme lu</button>
+          </form>
+          {% endif %}
+        </div>
+
+        <ul>
+          {% for a in alertes %}
+            <li>
+              <strong>{{ a.parcelle.nom }}</strong> — {{ a.type }} — {{ a.get_niveau_display }} — {{ a.date|date:"j F Y" }}
+              {% if a.est_lue %}<span class="badge read">lu</span>{% else %}<span class="badge unread">non lu</span>{% endif %}
+              <form method="post" action="{% url 'toggle_alerte' a.id %}" style="display:inline;">
+                {% csrf_token %}
+                <button type="submit">{% if a.est_lue %}Marquer non lu{% else %}Marquer lu{% endif %}</button>
+              </form>
+            </li>
+          {% empty %}
+            <li>Aucune alerte</li>
+          {% endfor %}
+        </ul>
+      </section>
+    </main>
+  </div>
 </body>
 </html>

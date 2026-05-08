@@ -1,12 +1,11 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="fr">
-    <link rel="stylesheet" href="{% static 'style.css' %}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Parcelles</title>
-    <link rel="stylesheet" href="../style.css">
+    <link rel="stylesheet" href="{% static 'style.css' %}">
 </head>
 <body>
     <div class="container">
@@ -14,39 +13,52 @@
             <h2>Menu</h2>
             <ul>
                 <li><a href="{% url 'home' %}">Tableau de bord</a></li>
+                <li><a href="{% url 'cultures' %}">Cultures</a></li>
                 <li><a href="{% url 'parcels' %}">Parcelles</a></li>
                 <li><a href="{% url 'observations' %}">Observations</a></li>
-                <li><a href="{% url 'alertes' %}">Alertes ({{nbralerte}})</a></li>
+                <li><a href="{% url 'alertes' %}">Alertes ({{ nbralerte }})</a></li>
                 <li><a href="{% url 'profile' %}">Profil</a></li>
                 <li><a href="{% url 'settings' %}">Paramètres</a></li>
             </ul>
         </aside>
+
         <main class="main-content">
             <header class="header">
                 <h1>Parcelles</h1>
-                <button class="add-btn">+ Ajouter</button>
+                <a href="{% url 'create_parcelle' %}"><button class="add-btn">+ Ajouter</button></a>
             </header>
+
             <section class="parcels-list">
-                <div class="parcel-card">
-                    <h3>Parcelle A</h3>
-                    <p>Culture: Blé</p>
-                    <p>Dernière obs: Hier</p>
-                    <div class="actions">
-                        <button>Voir</button>
-                        <button>Modifier</button>
-                        <button>Supprimer</button>
+                {% for parcelle in parcelles %}
+                    <div class="parcel-card">
+                        <h3>{{ parcelle.nom }}</h3>
+                        <p>Localisation: {{ parcelle.localisation }}</p>
+                        <p>Surface: {{ parcelle.surface_ha }} ha</p>
+
+                        {% with culture=parcelle.cultures.all|first %}
+                            <p>Culture: {% if culture %}{{ culture.type }}{% else %}Aucune{% endif %}</p>
+                        {% endwith %}
+
+                        {% with obs=parcelle.observations.all|first %}
+                            <p>Dernière obs: {% if obs %}{{ obs.date|date:"j F Y" }}{% else %}Aucune{% endif %}</p>
+                        {% endwith %}
+
+                        <div class="actions">
+                            <a href="{% url 'parcel' parcelle.id %}">
+                                <button type="button">Voir</button>
+                            </a>
+                            <a href="{% url 'edit_parcelle' parcelle.id %}">
+                                <button type="button">Modifier</button>
+                            </a>
+                            <form method="post" action="{% url 'delete_parcelle' parcelle.id %}" style="display:inline;">
+                                {% csrf_token %}
+                                <button type="submit" onclick="return confirm('Supprimer cette parcelle ?')">Supprimer</button>
+                            </form>
+                        </div>
                     </div>
-                </div>
-                <div class="parcel-card">
-                    <h3>Parcelle B</h3>
-                    <p>Culture: Maïs</p>
-                    <p>Dernière obs: 2j</p>
-                    <div class="actions">
-                        <button>Voir</button>
-                        <button>Modifier</button>
-                        <button>Supprimer</button>
-                    </div>
-                </div>
+                {% empty %}
+                    <p>Aucune parcelle trouvée.</p>
+                {% endfor %}
             </section>
         </main>
     </div>

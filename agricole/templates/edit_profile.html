@@ -1,0 +1,47 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modifier le profil</title>
+    <link rel="stylesheet" href="{% static 'style.css' %}">
+</head>
+<body>
+    <div class="container">
+        <aside class="sidebar">
+            <h2>Menu</h2>
+            <ul>
+                <li><a href="{% url 'home' %}">Tableau de bord</a></li>
+                <li><a href="{% url 'cultures' %}">Cultures</a></li>
+                <li><a href="{% url 'parcels' %}">Parcelles</a></li>
+                <li><a href="{% url 'observations' %}">Observations</a></li>
+                <li><a href="{% url 'alertes' %}">Alertes ({{ nbralerte }})</a></li>
+                <li><a href="{% url 'profile' %}">Profil</a></li>
+                <li><a href="{% url 'settings' %}">Paramètres</a></li>
+            </ul>
+        </aside>
+
+        <main class="main-content">
+            <header class="header">
+                <h1>Modifier le profil</h1>
+                <div class="actions">
+                    <a href="{% url 'profile' %}" class="back-btn">Précédent</a>
+                </div>
+            </header>
+            <section class="content-section">
+                <form method="post" action="{% url 'edit_profile' %}">
+                    {% csrf_token %}
+                    <label for="username">Nom d'utilisateur</label>
+                    <input id="username" name="username" type="text" value="{{ user.username }}" required>
+
+                    <label for="email">Email</label>
+                    <input id="email" name="email" type="email" value="{{ user.email }}" required>
+
+                    <button type="submit">Enregistrer</button>
+                </form>
+            </section>
+        </main>
+    </div>
+</body>
+</html>

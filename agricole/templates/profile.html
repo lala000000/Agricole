@@ -6,30 +6,36 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Profil</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../style.css">
 </head>
 <body>
-    <header>
-        <h1>Profil</h1>
-        <nav>
+    <div class="container">
+        <aside class="sidebar">
+            <h2>Menu</h2>
             <ul>
-                <li><a href="{% url 'home' %}">Accueil</a></li>
-                <li><a href="{% url 'home' %}">Dashboard</a></li>
+                <li><a href="{% url 'home' %}">Tableau de bord</a></li>
+                <li><a href="{% url 'cultures' %}">Cultures</a></li>
+                <li><a href="{% url 'parcels' %}">Parcelles</a></li>
+                <li><a href="{% url 'observations' %}">Observations</a></li>
+                <li><a href="{% url 'alertes' %}">Alertes({{ nbralerte }})</a></li>
                 <li><a href="{% url 'profile' %}">Profil</a></li>
                 <li><a href="{% url 'settings' %}">Paramètres</a></li>
             </ul>
-        </nav>
-    </header>
-    <main>
-        <section>
+        </aside>
+
+    <main class="main-content">
+        <header class="header">
+            <h1>Profil de l'Utilisateur</h1>
+            <div class="actions">
+                <a href="{% url 'edit_profile' %}"><button class="edit-btn">Modifier</button></a>
+            </div>
+        </header>
+        <section class="content-section">
             <h2>Informations du Profil</h2>
-            <p>Nom : Utilisateur Exemple</p>
-            <p>Email : utilisateur@example.com</p>
-            <button>Modifier Profil</button>
+            <p>Nom : {{ user.username }}</p>
+            <p>Email : {{ user.email }}</p>
         </section>
     </main>
-    <footer>
-        <p>&copy; 2026 Votre Projet</p>
-    </footer>
+    </div>
 </body>
 </html>
