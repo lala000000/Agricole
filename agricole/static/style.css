@@ -306,16 +306,60 @@ li {
     border-color: var(--accent);
     box-shadow: 0 16px 32px rgba(99, 102, 241, 0.18);
 }
-
 @media (max-width: 1024px) {
+
     .container {
         flex-direction: column;
-        padding: 1rem;
+        padding: 0.8rem;
     }
 
     .sidebar {
         width: 100%;
+        padding: 1rem;
         border-radius: 20px;
+    }
+
+    .sidebar h2 {
+        text-align: center;
+        margin-bottom: 1rem;
+    }
+
+    .sidebar ul {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+        gap: 0.8rem;
+    }
+
+    .sidebar li {
+        margin: 0;
+    }
+
+    .sidebar a {
+        justify-content: center;
+        text-align: center;
+        padding: 1rem;
+        border-radius: 14px;
+        font-size: 0.95rem;
+    }
+
+    .main-content {
+        width: 100%;
+    }
+
+    .header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+    }
+
+    .tiles {
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    }
+
+    table.data-table {
+        display: block;
+        overflow-x: auto;
+        white-space: nowrap;
     }
 }
 
@@ -419,167 +463,66 @@ li {
         font-size: 0.8rem;
     }
 }
-
 @media (max-width: 640px) {
+
     .container {
-        gap: 0.5rem;
+        flex-direction: column;
         padding: 0.5rem;
     }
 
     .sidebar {
+        width: 100%;
         padding: 0.8rem;
-        border-radius: 12px;
+        border-radius: 18px;
+    }
+
+    .sidebar h2 {
+        text-align: center;
+        margin-bottom: 1rem;
     }
 
     .sidebar ul {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 0.5rem;
-    }
-
-    .sidebar li {
-        margin-bottom: 0;
-        flex: 0 1 calc(50% - 0.25rem);
-    }
-
-    .sidebar a {
-        padding: 0.5rem;
-        font-size: 0.75rem;
-        justify-content: center;
-        text-align: center;
-    }
-
-    .header {
-        padding: 0.8rem;
-        flex-direction: column;
-        align-items: stretch;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
         gap: 0.6rem;
     }
 
-    .header h1 {
-        font-size: clamp(1.2rem, 1.3vw, 1.5rem);
+    .sidebar li {
+        margin: 0;
+    }
+
+    .sidebar a {
+        justify-content: center;
+        text-align: center;
+        padding: 0.8rem;
+        font-size: 0.85rem;
+        border-radius: 14px;
     }
 
     .main-content {
-        gap: 0.5rem;
+        width: 100%;
+    }
+
+    .header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 0.8rem;
     }
 
     .tiles {
         grid-template-columns: 1fr;
-        gap: 0.6rem;
     }
 
-    .tile {
-        min-height: 100px;
-        padding: 0.8rem;
-    }
-
-    .parcel-card {
-        padding: 0.8rem;
-        margin-bottom: 1rem;
-    }
-
-    .parcel-card h3 {
-        font-size: 0.95rem;
-        margin: 0 0 0.4rem 0;
-    }
-
-    .parcel-card p {
-        font-size: 0.85rem;
-        margin: 0.3rem 0;
-    }
-
-    .content-section,
-    .data-table,
-    .edit-form,
-    .parcel-info,
-    .indicators {
-        padding: 0.8rem;
-        margin-top: 0.6rem;
-    }
-
-    .add-btn,
-    .edit-btn,
-    .sidebar button,
     button {
         width: 100%;
-        padding: 0.6rem;
-        font-size: 0.85rem;
-    }
-
-    form {
-        gap: 0.6rem;
-    }
-
-    label {
-        font-size: 0.85rem;
-        margin-bottom: 0.3rem;
-    }
-
-    input,
-    select,
-    textarea {
-        padding: 0.7rem;
-        font-size: 0.9rem;
-        border-radius: 8px;
     }
 
     table.data-table {
-        font-size: 0.75rem;
         display: block;
         overflow-x: auto;
-    }
-
-    table.data-table thead {
-        display: none;
-    }
-
-    table.data-table tbody tr {
-        display: block;
-        margin-bottom: 1rem;
-        background: rgba(255, 255, 255, 0.92);
-        border: 1px solid var(--border);
-        border-radius: 6px;
-        padding: 0.8rem;
-    }
-
-    table.data-table td {
-        display: block;
-        text-align: left;
-        padding: 0.4rem 0;
-        border: none;
-        border-bottom: 1px solid var(--border);
-    }
-
-    table.data-table td:last-child {
-        border-bottom: none;
-    }
-
-    table.data-table td::before {
-        content: attr(data-label);
-        font-weight: 600;
-        display: inline-block;
-        min-width: 100px;
-        color: var(--text-muted);
-    }
-
-    .actions {
-        flex-direction: column;
-        gap: 0.4rem;
-    }
-
-    .back-btn {
-        padding: 0.5rem 1rem;
-        font-size: 0.8rem;
-        width: 100%;
-    }
-
-    .table-action-btn {
-        padding: 0.35rem 0.7rem;
-        font-size: 0.75rem;
+        white-space: nowrap;
     }
 }
-
 @media (max-width: 480px) {
     .container {
         padding: 0.3rem;
